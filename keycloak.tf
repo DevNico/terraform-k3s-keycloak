@@ -9,7 +9,7 @@ resource "random_password" "keycloak_admin" {
 }
 
 locals {
-  admin_password = var.admin_password != null ? var.admin_password : random_password.keycloak_admin.result
+  admin_password = coalesce(var.admin_password, random_password.keycloak_admin.result)
 }
 
 resource "helm_release" "keycloak" {
